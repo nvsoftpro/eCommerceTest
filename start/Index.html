@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html ng-app="commerce">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commerce Test</title>
+
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../dist/css/app.css">
+  <link rel="stylesheet" href="../dist/css/app.min.css">
+  <link rel="stylesheet" href="../dist/vendors/css/angular-material.min.css">
+  <link rel="stylesheet" href="../dist/vendors/css/font-awesome.min.css">
+  <!-- endinject -->
+</head>
+<body ng-controller="mainController as main" ng-cloak layout="column" ng-init="main.storeLoad()">
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-button aria-label="Home">
+                Commerce Test  {{main.filterCategory}}
+            </md-button>
+            <span flex></span>
+            <md-input-container class="md-icon-float search-box">
+                <label>Search</label>
+                <md-icon md-font-icon="fa fa-search"></md-icon>
+                <input ng-model="main.searchText" my-enter="filterCartoList(searchInput)" />
+            </md-input-container>
+            <md-button class="md-raised" aria-label="Learn More" ng-click="main.clearConfirm()">
+                <span>{{main.cart}}</span>
+            </md-button>
+
+            <md-button class="md-fab md-primary md-hue-2" aria-label="Profile">
+                <md-tooltip md-visible="demo.showTooltip" md-direction="left">
+                    User Profile
+                </md-tooltip>
+                <md-icon md-svg-icon="social:people" style="color: #00F;" class="s48" aria-label="People Icon"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <div class="container body-content">
+		<div flex layout="row">
+			<md-sidenav flex="10" md-is-locked-open="true" class="md-whiteframe-z1">
+				<md-content layout="column" layout-align="center center" layout-wrap>
+					<md-button class="md-primary" ng-click="main.filter('')" target="_blank">All categories</md-button>
+					<div ng-repeat="category in main.categories">
+						<md-button ng-click="main.filter(category)" ng-class="{'md-primary':main.filterCategory===category}" >{{category}}</md-button>
+					</div>
+				</md-content>
+			</md-sidenav>
+			<div layout="column" flex>
+				<div layout="row" layout-padding layout-wrap layout-fill style="padding-bottom: 32px;" ng-cloak>
+					<div ng-repeat="item in main.storeItems | filter:main.searchFilter">
+						<md-card>
+							<md-card-title>
+								<md-card-title-media>
+									<div class="md-media-md card-media">
+										<img ng-src="{{item.mediaUrl}}" class="md-card-image" alt="Item image">
+									</div>
+								</md-card-title-media>
+								<md-card-title-text class="title-box">
+									<span class="md-headline">Name: {{item.name}}</span>
+									<span class="md-subhead">Category: {{item.category}}</span>
+									<span class="md-subhead">Description: {{item.description}}</span>
+									<span class="md-subhead">Price: {{item.price}}</span>
+								</md-card-title-text>
+							</md-card-title>
+							<md-card-actions layout="row" layout-align="end center">
+								<md-button ng-click="main.addToCart(item)">Add to Cart</md-button>
+							</md-card-actions>
+						</md-card>
+					</div>
+
+				</div>
+			</div>
+		</div>
+        <hr />
+        <footer>
+            <p>&copy; 2016 - CommerceTest by Vladimir Knyazkov</p>
+        </footer>
+    </div>
+
+    <!-- inject:js -->
+    <script src="../dist/vendors/js/angular.min.js"></script>
+    <script src="../dist/vendors/js/angular-sanitize.min.js"></script>
+    <script src="../dist/vendors/js/angular-route.min.js"></script>
+    <script src="../dist/vendors/js/angular-messages.min.js"></script>
+    <script src="../dist/vendors/js/angular-material.min.js"></script>
+    <script src="../dist/vendors/js/angular-local-storage.min.js"></script>
+    <script src="../dist/vendors/js/angular-aria.min.js"></script>
+    <script src="../dist/vendors/js/angular-animate.min.js"></script>
+    <!-- endinject -->
+	<!-- inject:appjs -->
+	<script type="text/javascript" src="../src/app/commerceApp.js?v=1.0.0">&#160;</script>
+	<script type="text/javascript" src="../src/app/services/storeService.js?v=1.0.0">&#160;</script>
+	<script type="text/javascript" src="../src/app/services/storageService.js?v=1.0.0">&#160;</script>
+	<script type="text/javascript" src="../src/app/services/cartService.js?v=1.0.0">&#160;</script>
+	<script type="text/javascript" src="../src/app/mainController.js?v=1.0.0">&#160;</script>
+	<!-- endinject -->
+</body>
+</html>
